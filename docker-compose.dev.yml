@@ -1,0 +1,40 @@
+services:
+  frontend-dev:
+    image: node:20-alpine
+    working_dir: /app
+    volumes:
+      - ./frontend:/app:cached
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0 --port 5173"
+    ports:
+      - "5173:5173"
+    environment:
+      VITE_BACKEND_URL: http://localhost:8080
+    depends_on:
+      - backend-dev
+    networks:
+      - app-network
+
+  backend-dev:
+    build:
+      context: ./backend
+      target: dev
+    working_dir: /app
+    volumes:
+      - ./backend:/app:cached
+      - cargo-target:/app/target
+    ports:
+      - "8080:8080"
+    environment:
+      OPENWEATHER_API_KEY: ${OPENWEATHER_API_KEY}
+    networks:
+      - app-network
+
+# use same networks/volumes as main compose file
+networks:
+  app-network:
+    external: false
+
+volumes:
+  cargo-registry:
+  cargo-target:
+
