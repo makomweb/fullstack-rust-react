@@ -6,6 +6,7 @@ A fully containerized fullstack application with React 19 frontend and Rust API 
   <img src="./images/image.png" alt="project-image" width="300"/>
 </p>
 
+## Architecture diagram
 
 ```text
 ┌─────────────┐     HTTP/JSON      ┌────────────────────────────────────┐
